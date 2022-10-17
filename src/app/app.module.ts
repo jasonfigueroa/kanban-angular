@@ -1,6 +1,6 @@
 ﻿import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 // used to create fake backend
@@ -23,12 +23,14 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatGridListModule } from "@angular/material/grid-list";
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { CardComponent } from './card/card.component';
-import { KanbanBoardComponent } from './kanban-board/kanban-board.component';
+import { KanbanBoardComponent, AddCardDialog } from './kanban-board/kanban-board.component';
 import { DragDropModule } from "@angular/cdk/drag-drop";
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
     imports: [
         BrowserModule,
+        FormsModule,
         ReactiveFormsModule,
         HttpClientModule,
         AppRoutingModule,
@@ -41,14 +43,16 @@ import { DragDropModule } from "@angular/cdk/drag-drop";
         MatButtonModule,
         MatIconModule,
         MatGridListModule,
-        DragDropModule
+        DragDropModule,
+        MatDialogModule
     ],
     declarations: [
         AppComponent,
         HomeComponent,
         LoginComponent,
         CardComponent,
-        KanbanBoardComponent
+        KanbanBoardComponent,
+        AddCardDialog
     ],
     providers: [
         { provide: APP_INITIALIZER, useFactory: appInitializer, multi: true, deps: [AuthenticationService] },

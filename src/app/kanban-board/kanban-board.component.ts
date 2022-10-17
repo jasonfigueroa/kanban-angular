@@ -1,8 +1,14 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { Component, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Inject, OnInit, SimpleChanges } from '@angular/core';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CardStatus } from '@app/_enums/card-status';
 import { Card } from '@app/_models';
 import { CardService } from '@app/_services';
+
+export interface DialogData {
+    cardTitle: string;
+    cardDescription: string;
+}
 
 @Component({
     selector: 'app-kanban-board',
@@ -16,7 +22,8 @@ export class KanbanBoardComponent implements OnInit {
     doing: Card[] = [];
     done: Card[] = [];
 
-    constructor(private cardService: CardService) { }
+    constructor(private cardService: CardService,
+        public dialog: MatDialog) { }
 
     ngOnInit(): void {
         this.loading = true;
@@ -62,14 +69,24 @@ export class KanbanBoardComponent implements OnInit {
     }
 
     onAddClicked() {
-        // Currently hard coded to test functionality
-        let newCard = new Card();
+        const dialogRef = this.dialog.open(AddCardDialog, {
+            width: '500px',
+            data: {cardTitle: '', cardDescription: ''}
+        });
 
-        newCard.title = 'Will this work';
-        newCard.description = 'Let\'s Go!';
-        
-        this.cardService.addCard(newCard).subscribe(card => {
-            this.categorizeCards([card]);
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                if (result.cardTitle) {
+                    let newCard = new Card({
+                        title: result.cardTitle,
+                        description: result.cardDescription
+                    });
+    
+                    this.cardService.addCard(newCard).subscribe(card => {
+                        this.categorizeCards([card]);
+                    });
+                }
+            }
         });
     }
 
@@ -136,5 +153,19 @@ export class KanbanBoardComponent implements OnInit {
         }
 
         return status;
+    }
+}
+
+@Component({
+    selector: 'add-card-dialog',
+    templateUrl: 'add-card-dialog.html',
+    styleUrls: ['add-card-dialog.css']
+})
+export class AddCardDialog {
+    constructor(public dialogRef: MatDialogRef<AddCardDialog>,
+        @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+
+    onCancelClicked(): void {
+        this.dialogRef.close();
     }
 }
