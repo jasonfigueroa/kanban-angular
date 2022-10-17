@@ -5,4 +5,8 @@ export class Card {
     title: string;
     description: string;
     status: string;
+
+    public constructor(init?: Partial<Card>) {
+        Object.assign(this, init);
+    }
 }
