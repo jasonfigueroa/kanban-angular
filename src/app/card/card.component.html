@@ -7,7 +7,7 @@
     [class.mat-elevation-z8]="isActive">
     <div fxLayout="row" fxLayoutAlign="space-between center">
         <mat-card-title>{{ card.title }}</mat-card-title>
-        <mat-icon aria-hidden="false" aria-label="Edit icon" fontIcon="edit" class="edit-icon" (click)="onEditClicked()">edit</mat-icon>
+        <mat-icon aria-hidden="false" aria-label="Edit icon" fontIcon="edit" class="edit-icon" (click)="onEditClicked(card)">edit</mat-icon>
     </div>
     <mat-card-content>
         <p>{{ card.description }}</p>
