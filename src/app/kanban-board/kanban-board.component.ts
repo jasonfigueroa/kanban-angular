@@ -90,6 +90,42 @@ export class KanbanBoardComponent implements OnInit {
         });
     }
 
+    onEditClicked(card: Card) {
+        const dialogRef = this.dialog.open(AddCardDialog, {
+            width: '500px',
+            data: {cardTitle: card.title, cardDescription: card.description}
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                if (result.cardTitle !== card.title || result.cardDescription !== card.description) {
+                    card.title = result.cardTitle;
+                    card.description = result.cardDescription;
+    
+                    this.cardService.updateCard(card).subscribe(updatedCard => {
+                        let cardToUpdateIndex: number;
+                        if (updatedCard.status === CardStatus.Todo) {
+                            cardToUpdateIndex = this.todo.findIndex(c => {
+                                return c.id === updatedCard.id;
+                            });
+                            Object.assign(this.todo[cardToUpdateIndex], updatedCard);
+                        } else if (updatedCard.status === CardStatus.Doing) {
+                            cardToUpdateIndex = this.doing.findIndex(c => {
+                                return c.id === updatedCard.id;
+                            });
+                            Object.assign(this.doing[cardToUpdateIndex], updatedCard);
+                        } else if (updatedCard.status === CardStatus.Done) {
+                            cardToUpdateIndex = this.done.findIndex(c => {
+                                return c.id === updatedCard.id;
+                            });
+                            Object.assign(this.done[cardToUpdateIndex], updatedCard);
+                        }
+                    });
+                }
+            }
+        });
+    }
+
     drop(event: CdkDragDrop<Card[]>) {
         if (event.previousContainer === event.container) {
             moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);

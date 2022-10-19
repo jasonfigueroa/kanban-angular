@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Card } from '@app/_models';
 
 @Component({
@@ -8,6 +8,7 @@ import { Card } from '@app/_models';
 })
 export class CardComponent implements OnInit {
     @Input() card: Card;
+    @Output() editButtonClicked: EventEmitter<Card> = new EventEmitter<Card>();
 
     isActive: boolean;
 
@@ -21,7 +22,7 @@ export class CardComponent implements OnInit {
         console.log('Delete button was clicked.');
     }
 
-    onEditClicked() {
-        console.log('Edit button was clicked.');
+    onEditClicked(card: Card) {
+        this.editButtonClicked.emit(card);
     }
 }
