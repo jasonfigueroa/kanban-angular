@@ -39,7 +39,11 @@
                     class="dropzone"
                     (cdkDropListDropped)="drop($event)">
                     <div *ngFor="let card of todo" cdkDrag>
-                        <app-card [card]="card" (editButtonClicked)="onEditClicked($event)"></app-card>
+                        <app-card
+                            [card]="card"
+                            (editButtonClicked)="onEditClicked($event)"
+                            (deleteButtonClicked)="onDeleteClicked($event)">
+                        </app-card>
                     </div>
                 </div>                
             </mat-grid-tile>
@@ -53,7 +57,11 @@
                     class="dropzone"
                     (cdkDropListDropped)="drop($event)">
                     <div *ngFor="let card of doing" cdkDrag>
-                        <app-card [card]="card" (editButtonClicked)="onEditClicked($event)"></app-card>
+                        <app-card
+                            [card]="card"
+                            (editButtonClicked)="onEditClicked($event)"
+                            (deleteButtonClicked)="onDeleteClicked($event)">
+                        </app-card>
                     </div>
                 </div>
             </mat-grid-tile>
@@ -67,7 +75,11 @@
                     class="dropzone"
                     (cdkDropListDropped)="drop($event)">
                     <div *ngFor="let card of done" cdkDrag>
-                        <app-card [card]="card" (editButtonClicked)="onEditClicked($event)"></app-card>
+                        <app-card
+                            [card]="card"
+                            (editButtonClicked)="onEditClicked($event)"
+                            (deleteButtonClicked)="onDeleteClicked($event)">
+                        </app-card>
                     </div>
                 </div>
             </mat-grid-tile>

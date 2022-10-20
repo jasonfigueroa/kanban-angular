@@ -126,6 +126,23 @@ export class KanbanBoardComponent implements OnInit {
         });
     }
 
+    onDeleteClicked(card: Card) {
+        const dialogRef = this.dialog.open(DeleteCardDialog, {
+            width: '500px',
+            data: {deleteCard: true}
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                if (result.deleteCard) {
+                    this.cardService.deleteCard(card).subscribe(deletedCard => {
+                        const deletedCardIndex = this.done.findIndex(c => c.id === deletedCard.id);
+                        this.done.splice(deletedCardIndex, 1);
+                    });
+                }
+            }
+        });
+    }
+
     drop(event: CdkDragDrop<Card[]>) {
         if (event.previousContainer === event.container) {
             moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
@@ -199,6 +216,19 @@ export class KanbanBoardComponent implements OnInit {
 })
 export class AddCardDialog {
     constructor(public dialogRef: MatDialogRef<AddCardDialog>,
+        @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+
+    onCancelClicked(): void {
+        this.dialogRef.close();
+    }
+}
+
+@Component({
+    selector: 'delete-card-dialog',
+    templateUrl: 'delete-card-dialog.html'
+})
+export class DeleteCardDialog {
+    constructor(public dialogRef: MatDialogRef<DeleteCardDialog>,
         @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
 
     onCancelClicked(): void {

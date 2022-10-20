@@ -23,7 +23,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatGridListModule } from "@angular/material/grid-list";
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { CardComponent } from './card/card.component';
-import { KanbanBoardComponent, AddCardDialog } from './kanban-board/kanban-board.component';
+import { KanbanBoardComponent, AddCardDialog, DeleteCardDialog } from './kanban-board/kanban-board.component';
 import { DragDropModule } from "@angular/cdk/drag-drop";
 import { MatDialogModule } from '@angular/material/dialog';
 
@@ -52,7 +52,8 @@ import { MatDialogModule } from '@angular/material/dialog';
         LoginComponent,
         CardComponent,
         KanbanBoardComponent,
-        AddCardDialog
+        AddCardDialog,
+        DeleteCardDialog
     ],
     providers: [
         { provide: APP_INITIALIZER, useFactory: appInitializer, multi: true, deps: [AuthenticationService] },
