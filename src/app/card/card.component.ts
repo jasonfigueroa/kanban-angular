@@ -9,6 +9,7 @@ import { Card } from '@app/_models';
 export class CardComponent implements OnInit {
     @Input() card: Card;
     @Output() editButtonClicked: EventEmitter<Card> = new EventEmitter<Card>();
+    @Output() deleteButtonClicked: EventEmitter<Card> = new EventEmitter<Card>();
 
     isActive: boolean;
 
@@ -18,8 +19,8 @@ export class CardComponent implements OnInit {
         this.isActive = false;
     }
 
-    onDeleteClicked() {
-        console.log('Delete button was clicked.');
+    onDeleteClicked(card: Card) {
+        this.deleteButtonClicked.emit(card);
     }
 
     onEditClicked(card: Card) {

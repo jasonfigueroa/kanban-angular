@@ -24,4 +24,8 @@ export class CardService {
     addCard(card: Card) {
         return this.http.post<Card>(this.url, card, {withCredentials: true});
     }
+
+    deleteCard(card: Card) {
+        return this.http.delete<Card>(`${this.url}/${card.id}`, {withCredentials: true});
+    }
 }
