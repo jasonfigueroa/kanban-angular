@@ -13,6 +13,6 @@
         <p>{{ card.description }}</p>
     </mat-card-content>
     <mat-card-actions>
-        <button *ngIf="card.status.toString()=='Done'" mat-stroked-button color="warn" (click)="onDeleteClicked(card)">DELETE</button>
+        <button class="delete-button" *ngIf="card.status.toString()=='Done'" mat-stroked-button (click)="onDeleteClicked(card)">DELETE</button>
     </mat-card-actions>
 </mat-card>
