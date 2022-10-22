@@ -12,6 +12,11 @@
     cursor: grabbing;
 }
 
+.edit-icon, .delete-button {
+    color: #f48fb1;
+}
+
 .edit-icon:hover {
     cursor: pointer;
+    color: #ed4980;
 }
